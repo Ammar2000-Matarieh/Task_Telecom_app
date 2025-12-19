@@ -1,7 +1,11 @@
 {
     "cSpell.words": [
+        "AUTOINCREMENT",
         "dartz",
+        "dotenv",
+        "geolocator",
         "sqflite",
+        "telecomsupporttask",
         "Tumn",
         "usecase",
         "usecases"

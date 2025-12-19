@@ -1,5 +1,5 @@
-import 'package:telecom_support_app/features/google_map/domain/entities/ticket.dart';
+import 'package:telecom_support_app/features/home/data/models/tickets_model.dart';
 
 abstract class MapRepo {
-  Future<List<Ticket>> getTicketsLocations();
+  Future<List<TicketModel>> getTicketsLocations();
 }

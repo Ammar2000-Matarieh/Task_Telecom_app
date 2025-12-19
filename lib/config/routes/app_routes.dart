@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:telecom_support_app/config/routes/routes_names.dart';
 import 'package:telecom_support_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:telecom_support_app/features/home/presentation/screens/active_tickets.dart';
-// import 'package:telecom_support_app/splash_screen.dart';
 
 class AppRoutes {
   static final navigatorKey = GlobalKey<NavigatorState>();

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -8,6 +9,8 @@ import 'package:telecom_support_app/core/helper/api/dio_consumer.dart';
 import 'package:telecom_support_app/core/helper/database/my_data_base_local.dart';
 import 'package:telecom_support_app/core/network/network_info.dart';
 import 'package:telecom_support_app/features/auth/auth_injection.dart';
+import 'package:telecom_support_app/features/close/close_job_injection.dart';
+import 'package:telecom_support_app/features/google_map/google_map_injection.dart';
 import 'package:telecom_support_app/features/home/home_injection.dart';
 
 final sl = GetIt.instance;
@@ -15,12 +18,15 @@ Future<void> init() async {
   //! Features
   await authInit(sl);
   await homeInit(sl);
+  await closeJobInit(sl);
+  await googleMapInit(sl);
 
   // ! Core
 
   sl.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(connectionChecker: sl()),
   );
+  sl.registerLazySingleton<Connectivity>(() => Connectivity());
 
   // ! External
 
@@ -28,7 +34,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => AppInterceptors());
 
-  final database = await TicketsDb.instance.database;
+  final database = await MyDataBaseLocal.instance.database;
   sl.registerLazySingleton<Database>(() => database);
 
   sl.registerLazySingleton(() => InternetConnectionChecker());

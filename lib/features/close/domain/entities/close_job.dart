@@ -3,13 +3,13 @@ class CloseJob {
   final String action;
   final String notes;
   final String imagePath;
-  final bool synced;
+  // final bool synced;
 
   CloseJob({
     required this.ticketId,
     required this.action,
     required this.notes,
     required this.imagePath,
-    required this.synced,
+    // required this.synced,
   });
 }

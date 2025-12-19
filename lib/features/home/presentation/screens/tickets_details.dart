@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:telecom_support_app/config/routes/app_routes.dart';
 import 'package:telecom_support_app/core/extensions/size.dart';
-import 'package:telecom_support_app/features/google_map/presentation/screens/close_job_page.dart';
+import 'package:telecom_support_app/core/utils/app_strings.dart';
+import 'package:telecom_support_app/features/close/presentation/screens/close_job_screen.dart';
 import 'package:telecom_support_app/features/google_map/presentation/screens/tickets_map_page.dart';
 import 'package:telecom_support_app/features/home/data/models/tickets_model.dart';
 
@@ -14,7 +15,7 @@ class TicketsDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ticket Details"),
+        title: Text(AppStrings.ticketDetails),
         leading: IconButton(
           onPressed: () => back(),
           icon: Icon(Icons.arrow_back),
@@ -31,9 +32,9 @@ class TicketsDetails extends StatelessWidget {
                 border: Border.all(width: 0.5),
               ),
               child: ListTile(
-                title: Text("Customer: ${ticket.customerName}"),
-                subtitle: Text("Email: ${ticket.email}"),
-                trailing: Text("Phone: ${ticket.phone}"),
+                title: Text("${AppStrings.customerKey} ${ticket.customerName}"),
+                subtitle: Text("${AppStrings.emailKey} ${ticket.email}"),
+                trailing: Text("${AppStrings.phoneKey} ${ticket.phone}"),
               ),
             ),
             const SizedBox(height: 20),
@@ -50,7 +51,7 @@ class TicketsDetails extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const Text("View on Map"),
+                    child: Text(AppStrings.viewMapKey),
                   ),
                 ),
               ],
@@ -71,7 +72,7 @@ class TicketsDetails extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const Text("Close Job"),
+                    child: Text(AppStrings.closeJobsKey),
                   ),
                 ),
               ],

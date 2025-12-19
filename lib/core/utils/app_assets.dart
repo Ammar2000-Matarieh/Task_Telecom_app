@@ -12,7 +12,4 @@ class AppAssets {
   static const String loading =
       '$lottiePath'
       'Loading.json';
-
-  static const String otpCode = 'assets/lottie/animation_ll17m78m.json';
-  static const String forgetPass = 'assets/lottie/animation_ll17jwt8.json';
 }

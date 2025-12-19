@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:telecom_support_app/core/error/failures.dart';
 import 'package:telecom_support_app/core/network/network_info.dart';
+import 'package:telecom_support_app/features/home/data/datasources/home_repo_local_data_source.dart';
 import 'package:telecom_support_app/features/home/data/datasources/home_repo_remote_data_source.dart';
 import 'package:telecom_support_app/features/home/data/models/tickets_model.dart';
 import 'package:telecom_support_app/features/home/domain/repositories/home_repo.dart';
@@ -25,14 +26,14 @@ class HomeRepoImpl implements HomeRepo {
         await local.cacheTickets(tickets);
         return Right(tickets);
       } catch (_) {
-        return Left(ServerFailure(error: ""));
+        return Left(ServerFailure(error: "error server "));
       }
     } else {
       try {
         final cached = await local.getCachedTickets();
         return Right(cached);
       } catch (_) {
-        return Left(CacheFailure(error: ""));
+        return Left(CacheFailure(error: "error cashed "));
       }
     }
   }

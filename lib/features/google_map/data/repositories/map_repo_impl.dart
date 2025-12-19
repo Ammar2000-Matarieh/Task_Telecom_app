@@ -1,6 +1,6 @@
 import 'package:telecom_support_app/core/network/network_info.dart';
-import 'package:telecom_support_app/features/google_map/domain/entities/ticket.dart';
 import 'package:telecom_support_app/features/google_map/domain/repositories/map_repo.dart';
+import 'package:telecom_support_app/features/home/data/datasources/home_repo_local_data_source.dart';
 import 'package:telecom_support_app/features/home/data/datasources/home_repo_remote_data_source.dart';
 import 'package:telecom_support_app/features/home/data/models/tickets_model.dart';
 
@@ -12,7 +12,7 @@ class MapRepoImpl implements MapRepo {
   MapRepoImpl(this.local, this.remote, this.networkInfo);
 
   @override
-  Future<List<Ticket>> getTicketsLocations() async {
+  Future<List<TicketModel>> getTicketsLocations() async {
     if (await networkInfo.isConnected) {
       final List<TicketModel> models = await remote.getUsersTickets();
       await local.cacheTickets(models);
@@ -27,13 +27,13 @@ class MapRepoImpl implements MapRepo {
     }
   }
 
-  Ticket _mapToEntity(TicketModel model) {
-    return Ticket(
+  TicketModel _mapToEntity(TicketModel model) {
+    return TicketModel(
       id: model.id,
       customerName: model.customerName,
       email: model.email,
       phone: model.phone,
-      priority: "",
+      priority: model.priority,
       lat: model.lat,
       lng: model.lng,
     );

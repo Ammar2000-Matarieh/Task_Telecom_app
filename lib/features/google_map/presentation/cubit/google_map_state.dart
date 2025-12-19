@@ -4,16 +4,22 @@ abstract class GoogleMapState extends Equatable {
   const GoogleMapState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class GoogleMapInitial extends GoogleMapState {}
 
-class MapLoading extends GoogleMapState {}
+class GoogleMapLoading extends GoogleMapState {}
 
-class MapLoaded extends GoogleMapState {
-  final List<Ticket> tickets;
-  const MapLoaded(this.tickets);
+class GoogleMapLoaded extends GoogleMapState {
+  final double? distance;
+
+  const GoogleMapLoaded({required this.distance});
+
+  @override
+  List<Object?> get props => [distance];
 }
 
-class MapError extends GoogleMapState {}
+class GoogleMapPermissionDenied extends GoogleMapState {}
+
+class GoogleMapError extends GoogleMapState {}

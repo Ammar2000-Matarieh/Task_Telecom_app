@@ -1,49 +1,35 @@
-// enum TicketPriority { urgent, installation }
-
 class TicketModel {
   final int id;
   final String customerName;
   final String email;
   final String phone;
+  final String priority;
   final double lat;
   final double lng;
-  // final TicketPriority priority;
 
   TicketModel({
     required this.id,
     required this.customerName,
     required this.email,
     required this.phone,
+    required this.priority,
     required this.lat,
     required this.lng,
-    // required this.priority,
   });
 
   factory TicketModel.fromApi(Map<String, dynamic> json) {
-    return TicketModel(
-      id: json['id'],
-      customerName: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      lat: double.parse(json['address']['geo']['lat']),
-      lng: double.parse(json['address']['geo']['lng']),
-      // priority: json['id'] % 2 == 0
-      //     ? TicketPriority.urgent
-      //     : TicketPriority.installation,
-    );
-  }
+    final id = json['id'] as int;
+    final priority = id % 2 == 0 ? 'urgent' : 'installation';
+    final loc = AmmanLocations.pick(id);
 
-  factory TicketModel.fromDb(Map<String, dynamic> map) {
     return TicketModel(
-      id: map['id'],
-      customerName: map['customer_name'],
-      email: map['email'],
-      phone: map['phone'],
-      lat: map['lat'],
-      lng: map['lng'],
-      // priority: TicketPriority.values.firstWhere(
-      //   (e) => e.name == map['priority'],
-      // ),
+      id: id,
+      customerName: json['name'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
+      priority: priority,
+      lat: loc.$1,
+      lng: loc.$2,
     );
   }
 
@@ -52,8 +38,34 @@ class TicketModel {
     'customer_name': customerName,
     'email': email,
     'phone': phone,
+    'priority': priority,
     'lat': lat,
     'lng': lng,
-    // 'priority': priority.name, // urgent / installation
   };
+
+  factory TicketModel.fromDb(Map<String, dynamic> map) {
+    return TicketModel(
+      id: map['id'],
+      customerName: map['customer_name'],
+      email: map['email'],
+      phone: map['phone'],
+      priority: map['priority'],
+      lat: map['lat'],
+      lng: map['lng'],
+    );
+  }
+}
+
+class AmmanLocations {
+  static const List<(double, double)> _list = [
+    (31.9539, 35.9106), // Abdoun
+    (31.9862, 35.8778), // Sweifieh
+    (31.9653, 35.8439), // Khalda
+    (31.9950, 35.8640), // Tla' Al-Ali
+    (31.9516, 35.9393), // Al-Weibdeh
+    (31.9456, 35.9284), // Downtown
+    (31.8938, 35.9304), // Airport road area
+  ];
+
+  static (double, double) pick(int id) => _list[id % _list.length];
 }

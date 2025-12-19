@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:telecom_support_app/core/utils/app_strings.dart';
+import 'package:telecom_support_app/features/google_map/presentation/cubit/google_map_cubit.dart';
 import 'package:telecom_support_app/features/home/data/models/tickets_model.dart';
 
 class MapScreen extends StatelessWidget {
@@ -7,41 +10,72 @@ class MapScreen extends StatelessWidget {
 
   const MapScreen({super.key, required this.ticket});
 
+  BitmapDescriptor markerByPriority(String priority) {
+    return priority == 'urgent'
+        ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)
+        : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue);
+  }
+
   @override
   Widget build(BuildContext context) {
-    //markerColor
-    // final markerColor = ticket.priority == 'urgent'
-    //     ? BitmapDescriptor.hueRed
-    //     : BitmapDescriptor.hueBlue;
+    return BlocProvider(
+      create: (_) =>
+          context.read<GoogleMapCubit>()
+            ..loadDistance(ticketLat: ticket.lat, ticketLng: ticket.lng),
+      child: Scaffold(
+        appBar: AppBar(title: Text(AppStrings.ticketLocation)),
+        body: BlocBuilder<GoogleMapCubit, GoogleMapState>(
+          builder: (context, state) {
+            if (state is GoogleMapLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("Ticket Location")),
-      body: Column(
-        children: [
-          Expanded(
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(ticket.lat, ticket.lng),
-                zoom: 14,
-              ),
-              markers: {
-                Marker(
-                  markerId: const MarkerId("ticket_marker"),
-                  position: LatLng(ticket.lat, ticket.lng),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(20.9),
-                ),
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(
-              "Distance from you: 3.4 km",
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
+            if (state is GoogleMapPermissionDenied) {
+              return Center(
+                child: Text(AppStrings.locationPermissionDeniedKey),
+              );
+            }
+
+            if (state is GoogleMapLoaded) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: GoogleMap(
+                      mapType: MapType.normal,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(ticket.lat, ticket.lng),
+                        zoom: 14,
+                      ),
+                      markers: {
+                        Marker(
+                          markerId: MarkerId(ticket.id.toString()),
+                          position: LatLng(ticket.lat, ticket.lng),
+                          icon: markerByPriority(ticket.priority),
+                          infoWindow: InfoWindow(title: ticket.customerName),
+                        ),
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      state.distance == null
+                          ? AppStrings.distanceUnavailableKey
+                          : "${AppStrings.distanceFromYouKey}: ${state.distance!.toStringAsFixed(2)} ${AppStrings.kmKey}",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            if (state is GoogleMapError) {
+              return Center(child: Text(AppStrings.somethingWentKey));
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }

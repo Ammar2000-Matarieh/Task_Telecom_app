@@ -138,7 +138,6 @@ class DioConsumer implements ApiConsumer {
     if ((rawData.startsWith('{') && rawData.endsWith('}')) ||
         (rawData.startsWith('[') && rawData.endsWith(']'))) {
       try {
-        // print(rawData);
         return jsonDecode(rawData);
       } catch (e) {
         log('JSON decode error: $e');

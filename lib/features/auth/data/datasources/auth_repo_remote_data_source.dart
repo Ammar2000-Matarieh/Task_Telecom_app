@@ -12,12 +12,12 @@ class AuthRepoRemoteDataSourceImpl implements AuthRepoRemoteDataSource {
   @override
   Future<void> login(AuthModel authModel) async {
     try {
-      var res = await auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: authModel.email,
         password: authModel.password,
       );
 
-      print(res.user?.email);
+      // print(res.user?.email); // var res =
     } catch (e) {
       log("Error during Login : $e");
       throw ServerException();
