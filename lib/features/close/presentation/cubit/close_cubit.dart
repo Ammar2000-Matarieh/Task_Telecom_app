@@ -5,13 +5,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:telecom_support_app/core/utils/app_strings.dart';
 import 'package:telecom_support_app/features/close/domain/entities/close_job.dart';
 import 'package:telecom_support_app/features/close/domain/usecases/close_job_usecase.dart';
-import 'package:telecom_support_app/features/google_map/presentation/cubit/cubit/sync_cubit.dart';
+import 'package:telecom_support_app/features/google_map/presentation/cubit/sync/sync_cubit.dart';
 
 part 'close_state.dart';
 
 class CloseCubit extends Cubit<CloseState> {
   final CloseJobUseCase useCase;
-  final SyncCubit syncCubit; // 👈 optional to trigger sync manually
+  final SyncCubit syncCubit;
 
   CloseCubit(this.useCase, this.syncCubit) : super(const CloseFormState());
 
@@ -61,7 +61,6 @@ class CloseCubit extends Cubit<CloseState> {
       ),
     );
 
-    // ✅ always success (online sent OR offline saved)
     emit(CloseJobSuccess());
   }
 

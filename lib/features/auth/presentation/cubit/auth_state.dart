@@ -21,8 +21,6 @@ class LoginErrorState extends AuthState {
 }
 
 class LoginSuccessState extends AuthState {
-  // final ResponseModel res;
-
   const LoginSuccessState();
 
   @override

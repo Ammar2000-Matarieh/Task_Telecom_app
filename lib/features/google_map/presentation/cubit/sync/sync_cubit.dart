@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,7 @@ class SyncCubit extends Cubit<SyncState> {
 
   Future<void> start() async {
     final result = await connectivity.checkConnectivity();
+    // ignore: unrelated_type_equality_checks
     final isOnline = result != ConnectivityResult.none;
 
     if (isOnline) {
@@ -26,6 +26,7 @@ class SyncCubit extends Cubit<SyncState> {
     }
 
     _sub ??= connectivity.onConnectivityChanged.listen((result) async {
+      // ignore: unrelated_type_equality_checks
       final online = result != ConnectivityResult.none;
 
       if (online) {

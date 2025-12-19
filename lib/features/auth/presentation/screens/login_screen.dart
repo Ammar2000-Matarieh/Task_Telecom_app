@@ -10,7 +10,12 @@ import 'package:telecom_support_app/core/validator/validator_app.dart';
 import 'package:telecom_support_app/core/widgets/custom_form_field.dart';
 import 'package:telecom_support_app/features/auth/data/models/auth_model.dart';
 import 'package:telecom_support_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:telecom_support_app/features/auth/presentation/widgets/show_error_dialog.dart';
 
+// ============ Account Login Success :
+
+// pass => Ammar123@@dfdg
+// email => ammar33@gmail.com
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -27,7 +32,7 @@ class LoginScreen extends StatelessWidget {
             bloc.passwordController.clear();
             goAndFinish(RoutesNames.layout);
           } else if (state is LoginErrorState) {
-            _showErrorDialog(context);
+            showErrorDialog(context);
           }
         },
         child: SafeArea(
@@ -183,52 +188,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
-  void _showErrorDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-        title: Row(
-          children: [
-            const Icon(
-              CupertinoIcons.exclamationmark_triangle_fill,
-              color: Colors.red,
-            ),
-            SizedBox(width: 4.w),
-            Text(AppStrings.errorLoginKey),
-          ],
-        ),
-        content: Text(AppStrings.errorDescLoginKey),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(AppStrings.okPopUp),
-          ),
-        ],
-      ),
-    );
-  }
 }
-// pass => Ammar123@@dfdg
-// email => ammar33@gmail.com
-
-
-// await FirebaseAuth.instance
-//                                               .createUserWithEmailAndPassword(
-//                                                 email: bloc.emailController.text
-//                                                     .trim(),
-//                                                 password: bloc
-//                                                     .passwordController
-//                                                     .text
-//                                                     .trim(),
-//                                               );
-
-
-
-
-// await FirebaseAuth.instance.createUserWithEmailAndPassword(
-//                   email: bloc.emailController.text.trim(),
-//                   password: bloc.passwordController.text.trim(),
-//                 );

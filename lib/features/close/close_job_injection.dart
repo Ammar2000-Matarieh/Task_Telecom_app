@@ -6,7 +6,7 @@ import 'package:telecom_support_app/features/close/data/repositories/close_job_r
 import 'package:telecom_support_app/features/close/domain/repositories/close_job_repo.dart';
 import 'package:telecom_support_app/features/close/domain/usecases/close_job_usecase.dart';
 import 'package:telecom_support_app/features/close/presentation/cubit/close_cubit.dart';
-import 'package:telecom_support_app/features/google_map/presentation/cubit/cubit/sync_cubit.dart';
+import 'package:telecom_support_app/features/google_map/presentation/cubit/sync/sync_cubit.dart';
 
 Future<void> closeJobInit(GetIt sl) async {
   // 🔹 Data Sources

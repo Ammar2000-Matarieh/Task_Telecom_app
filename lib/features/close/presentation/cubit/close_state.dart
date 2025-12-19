@@ -7,7 +7,6 @@ sealed class CloseState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// 🟢 Form State (المصدر الوحيد للحقيقة)
 final class CloseFormState extends CloseState {
   final String? selectedAction;
   final XFile? pickedImage;

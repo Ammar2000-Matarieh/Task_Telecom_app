@@ -16,8 +16,6 @@ class AuthRepoRemoteDataSourceImpl implements AuthRepoRemoteDataSource {
         email: authModel.email,
         password: authModel.password,
       );
-
-      // print(res.user?.email); // var res =
     } catch (e) {
       log("Error during Login : $e");
       throw ServerException();
